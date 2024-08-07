@@ -6,7 +6,7 @@
 /*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 15:46:20 by arsenii           #+#    #+#             */
-/*   Updated: 2024/07/14 18:25:29 by arsenii          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:00:35 by arsenii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_map(t_map_data *map)
 	free(map->map_storage);
 }
 
-void	error_exit(const char *msg, t_map_data *map)
+void	error_exit(char *msg, t_map_data *map)
 {
 	ft_putendl_fd(msg, 1);
 	ft_putendl_fd("\n", 1);
@@ -45,7 +45,7 @@ void	check_fd(int fd)
 {
 	if (fd < 0)
 	{
-		ft_putstr("File descriptor error");
+		ft_putendl_fd("File descriptor error", 1);
 		exit(1);
 	}
 }

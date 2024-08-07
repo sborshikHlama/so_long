@@ -5,48 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 11:11:40 by arsenii           #+#    #+#             */
-/*   Updated: 2024/07/11 18:30:14 by arsenii          ###   ########.fr       */
+/*   Created: 2023/11/08 16:00:33 by aevstign          #+#    #+#             */
+/*   Updated: 2024/08/01 17:34:28 by arsenii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*ft_read_and_append(int fd, char *saved_str)
+{
+	char	*temp;
+	int		bytes_read;
+
+	temp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!temp)
+		return (NULL);
+	bytes_read = 1;
+	while (!ft_strchr_v(saved_str, '\n') && bytes_read != 0)
+	{
+		bytes_read = read(fd, temp, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(temp);
+			return (NULL);
+		}
+		temp[bytes_read] = '\0';
+		saved_str = ft_strjoin_v(saved_str, temp);
+	}
+	free(temp);
+	return (saved_str);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	string;
+	static char	*saved_str;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	string = read_append(fd, string);
-	if (!string)
+	saved_str = ft_read_and_append(fd, saved_str);
+	if (!saved_str)
 		return (NULL);
-	line = get_line(string);
-	string = update_line(string);
-	return (string);
-}
-
-char	*read_append(int fd, char *string)
-{
-	char	*tmp;
-	int		bytes;
-
-	tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!tmp)
-		return (NULL);
-	bytes = 1;
-	while (!ft_strchr_gnl(string, '\n') && bytes != 0)
-	{
-		bytes = read(fd, tmp, BUFFER_SIZE);
-		if (bytes == -1)
-		{
-			free(tmp);
-			return (NULL);
-		}
-		tmp[bytes] = '\0';
-		string = ft_strjoin_gnl(string, tmp);
-	}
-	free(tmp);
-	return (string);
+	line = ft_getline_fromleftstr(saved_str);
+	saved_str = ft_update_leftstr(saved_str);
+	return (line);
 }
