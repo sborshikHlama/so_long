@@ -8,7 +8,7 @@ MLXFLAGS      = -L$(MINILIBX_PATH) -lmlx -I$(MINILIBX_PATH) -framework OpenGL -f
 NAME          = so_long
 CC = gcc
 CFLAGS = -Wall -O2 -g
-SRC           = ./src/main.c ./src/map_utils.c  ./src/move.c ./src/error_handlers.c ./src/free.c ./src/window_utils.c ./libs/get_next_line/get_next_line.c ./libs/get_next_line/get_next_line_utils.c
+SRC           = ./src/main.c ./src/map_utils.c ./src/path.c ./src/move.c ./src/error_handlers.c ./src/free.c ./src/window_utils.c ./libs/get_next_line/get_next_line.c ./libs/get_next_line/get_next_line_utils.c
 OBJ           = $(SRC:.c=.o)
 
 # Цели
