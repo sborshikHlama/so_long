@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 19:28:28 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/11 09:39:46 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:34:13 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:37:44 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv)
 	int			fd_path;
 	char		*filename;
 
-	// arg_checker(argc, argv, &game.map);
+	arg_checker(&game.map, argc, argv);
 	filename = argv[1];
 	fd1 = open(filename, O_RDONLY);
 	fd2 = open(filename, O_RDONLY);
@@ -101,6 +101,7 @@ int	main(int argc, char **argv)
 	check_path(&game, fd_path);
 	close(fd1);
 	close(fd2);
+	close(fd_path);
 	printf("Starting game!\n");
 	start_game(&game);
 	printf("YOU WONE!\n");

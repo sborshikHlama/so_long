@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 18:31:44 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:07:50 by arsenii          ###   ########.fr       */
+/*   Updated: 2024/09/11 16:40:28 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,22 @@
 # include <stdlib.h>
 # include "../libs/get_next_line/get_next_line.h"
 # include "../libs/libft/libft.h"
-# include "../libs/minilibx/mlx.h"
+# include "../libs/minilibx-linux/mlx.h"
 # include <stdbool.h>
 
-# define W 13
-# define A 0
-# define S 1
-# define D 2
-# define ESC 53
+// Keys for mac
+// # define W 13
+// # define A 0
+// # define S 1
+// # define D 2
+// # define ESC 53
+
+//Keys for linux
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define ESC 65307
 
 # define WALL "./wall.xpm"
 # define GROUND "./ground.xpm"
@@ -55,7 +63,6 @@ typedef struct window
 	char	temp;
 }	t_window;
 
-
 typedef struct map_data
 {
 	int		rows;
@@ -66,7 +73,6 @@ typedef struct map_data
 	int		player_position_y;
 	int		player;
 	int		exit;
-	int		allocated;
 	char	**path_map;
 }	t_map_data;
 
@@ -80,7 +86,6 @@ typedef struct s_game
 
 # define WIDTH 71
 # define HEIGHT 71
-
 
 void	map_size(int fd, t_map_data *map);
 

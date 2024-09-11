@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 23:47:48 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:12:53 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:29 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:33:32 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	put_dinamic(int x, int y, char c, t_game *game)
 	if (c == '0' || c == 'C' || c == 'P')
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
 			game->window.img.floor, x * width, y * height);
-	else if (c == 'E')
+	if (c == 'E')
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
 			game->window.img.exit, x * width, y * height);
 	if (c == 'P')
@@ -49,7 +49,6 @@ void	put_dinamic(int x, int y, char c, t_game *game)
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
 			game->window.img.collectable, x * width, y * height);
 }
-
 
 int	render_img(t_game *game)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 18:26:32 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:02:49 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:57 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:34:00 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	valid_move(t_game *game, int row, int col, int pressed_key)
 {
 	game->window.temp = '0';
-
 	if (game->map.map_storage[row][col] == '1')
 		return (-1);
 	if (game->map.map_storage[row][col] == 'C')
@@ -54,7 +53,6 @@ static void	moving(t_game *game, int row, int col, int pressed_key)
 	old_col = game->map.player_position_x;
 	(void)pressed_key;
 	valid = valid_move(game, row, col, pressed_key);
-
 	if (valid != -1)
 	{
 		game->map.player_position_y = row;

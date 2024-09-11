@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 15:04:02 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/11 09:40:25 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:47 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:43:17 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	valid_path(t_game *game, int x, int y)
 	if (x < 0 || y < 0 || y >= game->map.rows || x >= game->map.cols)
 		return (false);
 	else if (game->map.path_map[y][x] == 'X')
-		return (false);	
+		return (false);
 	else if (game->map.path_map[y][x] == '1')
 		return (false);
 	else if (game->map.path_map[y][x] == 'E')

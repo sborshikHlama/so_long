@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 00:30:19 by arsenii           #+#    #+#             */
-/*   Updated: 2024/08/28 21:37:02 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:34:33 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:39:54 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,24 @@ void	free_map_traversable(char **map_traversable)
 
 void	free_img(t_game *game)
 {
-	// mlx_destroy_image(game->window.mlx, game->window.img.exit);
-	// if (game->img.collectible)
-	// 	mlx_destroy_image(game->mlx, game->img.collectible);
-	// if (game->img.player)
-	// 	mlx_destroy_image(game->mlx, game->img.player);
+	if (game->window.img.exit)
+		mlx_destroy_image(game->window.mlx, game->window.img.exit);
+	if (game->window.img.collectable)
+		mlx_destroy_image(game->window.mlx, game->window.img.collectable);
+	if (game->window.img.player)
+		mlx_destroy_image(game->window.mlx, game->window.img.player);
 	if (game->window.img.floor)
 		mlx_destroy_image(game->window.mlx, game->window.img.floor);
 	if (game->window.img.wall)
 		mlx_destroy_image(game->window.mlx, game->window.img.wall);
-	// if (game->img.on_exit)
-	// 	mlx_destroy_image(game->mlx, game->img.on_exit);
-	// if (game->img.fin_exit)
-	// 	mlx_destroy_image(game->mlx, game->img.fin_exit);
 	free_map(&game->map);
 	free(game->window.mlx);
 	exit(0);
 }
 
-
 int	close_window(t_game *game)
 {
 	mlx_destroy_window(game->window.mlx, game->window.win);
 	free_img(game);
-  exit (0); 
+	exit(0);
 }
-

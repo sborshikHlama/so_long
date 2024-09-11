@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 13:17:24 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/01 12:17:40 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:34:21 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/11 16:34:26 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	map_size(int fd, t_map_data *map)
 	max_width = 0;
 	height = 0;
 	line_length = 0;
-
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -121,4 +120,3 @@ void	ractangle_checker(t_map_data *map)
 		x++;
 	}
 }
-
