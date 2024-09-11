@@ -6,7 +6,7 @@
 /*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 18:31:44 by arsenii           #+#    #+#             */
-/*   Updated: 2024/08/28 21:50:00 by arsenii          ###   ########.fr       */
+/*   Updated: 2024/09/10 22:07:50 by arsenii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "../libs/get_next_line/get_next_line.h"
 # include "../libs/libft/libft.h"
 # include "../libs/minilibx/mlx.h"
+# include <stdbool.h>
 
 # define W 13
 # define A 0
@@ -66,7 +67,7 @@ typedef struct map_data
 	int		player;
 	int		exit;
 	int		allocated;
-	char	**map_traversable;
+	char	**path_map;
 }	t_map_data;
 
 typedef struct s_game
@@ -92,19 +93,14 @@ void	map_checker(t_map_data *map);
 void	check_fd(int fd);
 
 void	ractangle_checker(t_map_data *map);
-int		count_collectables(t_map_data *game);
 
 void	arg_checker(t_map_data *map, int argc, char **argv);
 
 void	set_textures(t_game *game);
+
 void	put_map(int x, int y, char c, t_game *game);
+
 int		render_img(t_game *game);
-
-int		count_collectables(t_map_data *map);
-
-void	traversable_test_malloc(t_game *game, int fd);
-
-// int	test_traversable(t_map_data *map, int x, int y);
 
 void	free_img(t_game *game);
 
@@ -114,12 +110,12 @@ int		close_window(t_game *game);
 
 void	display_step(int n);
 
+void	check_path(t_game *game, int fd);
+
 void	end_game(t_game *game, int col, int row);
 
 int		move_key(int keycode, t_game *game);
 
 void	map_validation(t_map_data *map);
-
-void	run_traversable_checks(t_game *game, int fd);
 
 #endif /* SO_LONG_H */

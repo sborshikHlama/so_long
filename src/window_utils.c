@@ -6,7 +6,7 @@
 /*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 23:47:48 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 17:03:51 by arsenii          ###   ########.fr       */
+/*   Updated: 2024/09/10 22:12:53 by arsenii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	put_dinamic(int x, int y, char c, t_game *game)
 	static int	width = WIDTH;
 	static int	height = HEIGHT;
 
-	if (c == '0')
+	if (c == '0' || c == 'C' || c == 'P')
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
 			game->window.img.floor, x * width, y * height);
 	else if (c == 'E')
@@ -50,17 +50,8 @@ void	put_dinamic(int x, int y, char c, t_game *game)
 			game->window.img.collectable, x * width, y * height);
 }
 
-void	put_static(int x, int y, char c, t_game *game)
-{
-	static int	width = WIDTH;
-	static int	height = HEIGHT;
 
-	if (c == '1')
-		mlx_put_image_to_window(game->window.mlx, game->window.win,
-			game->window.img.wall, x * width, y * height);
-}
-
-int	render_img(t_game *game, bool rerender)
+int	render_img(t_game *game)
 {
 	int	x;
 	int	y;
@@ -71,8 +62,6 @@ int	render_img(t_game *game, bool rerender)
 		x = 0;
 		while (x < game->map.cols)
 		{
-			if (!rerender)
-				put_static(x, y, game->map.map_storage[y][x], game);
 			put_dinamic(x, y, game->map.map_storage[y][x], game);
 			x++;
 		}
