@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 18:31:44 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/11 16:40:28 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:20:19 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,16 @@
 # define D 100
 # define ESC 65307
 
-# define WALL "./wall.xpm"
-# define GROUND "./ground.xpm"
-# define PLAYER "./player.xpm"
-# define COLLECTABLE "./collectable.xpm"
-# define EXIT_CLOSED "./exit_close.xpm"
-# define PLAYER_FRONT_XPM	"./front.xpm"
-# define PLAYER_LEFT_XPM	"./left.xpm"
-# define PLAYER_RIGHT_XPM	"./right.xpm"
-# define PLAYER_BACK_XPM	"./back.xpm"
+# define WALL "./assets/wall.xpm"
+# define GROUND "./assets/ground.xpm"
+# define PLAYER "./assets/player.xpm"
+# define COLLECTABLE "./assets/collectable.xpm"
+# define EXIT_CLOSED "./assets/exit_close.xpm"
+# define PLAYER_FRONT_XPM	"./assets/front.xpm"
+# define PLAYER_LEFT_XPM	"./assets/left.xpm"
+# define PLAYER_RIGHT_XPM	"./assets/right.xpm"
+# define PLAYER_BACK_XPM	"./assets/back.xpm"
+# define EXIT_OPENED "./assets/exit_open.xpm"
 
 typedef struct s_img
 {
@@ -53,6 +54,7 @@ typedef struct s_img
 	void	*fin_exit;
 	void	*on_exit;
 	void	*floor;
+	void	*exit_open;
 }	t_img;
 
 typedef struct window
@@ -94,6 +96,8 @@ void	wall_checker(t_map_data *map);
 void	error_exit(char *msg, t_map_data *map);
 
 void	map_checker(t_map_data *map);
+
+void	put_static(t_game *game);
 
 void	check_fd(int fd);
 

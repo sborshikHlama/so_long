@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:34:33 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/11 16:39:54 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:17:17 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_map_traversable(char **map_traversable)
 void	free_img(t_game *game)
 {
 	if (game->window.img.exit)
-		mlx_destroy_image(game->window.mlx, game->window.img.exit);
+		mlx_destroy_image(game->window.mlx, game->window.img.exit_open);
 	if (game->window.img.collectable)
 		mlx_destroy_image(game->window.mlx, game->window.img.collectable);
 	if (game->window.img.player)

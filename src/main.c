@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:34:13 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/11 16:37:44 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/12 13:29:25 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	read_map(int fd, t_map_data *map)
 void	prepare_game(t_game *game)
 {
 	game->map.player = 0;
-	game->move = 1;
+	game->move = 0;
 	game->map.rows = 0;
 	game->map.cols = 0;
 	game->end_game = 0;
@@ -53,19 +53,7 @@ void	start_game(t_game *game)
 	game->window.win = mlx_new_window(game->window.mlx, game->map.cols * WIDTH,
 			game->map.rows * HEIGHT, "SO_LONG");
 	set_textures(game);
-	y = 0;
-	while (y < game->map.rows)
-	{
-		x = 0;
-		while (x < game->map.cols)
-		{
-			if (game->map.map_storage[y][x] == '1')
-				mlx_put_image_to_window(game->window.mlx, game->window.win,
-					game->window.img.wall, x * WIDTH, y * HEIGHT);
-			x++;
-		}
-		y++;
-	}
+	put_static(game);
 	render_img(game);
 	mlx_key_hook(game->window.win, move_key, game);
 	mlx_hook(game->window.win, 17, 0, close_window, game);
