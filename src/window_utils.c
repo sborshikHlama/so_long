@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/21 23:47:48 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:12:53 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:29 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/21 21:00:51 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,48 @@ void	set_textures(t_game *game)
 			EXIT_CLOSED, &width, &height);
 	game->window.img.collectable = mlx_xpm_file_to_image(game->window.mlx,
 			COLLECTABLE, &width, &height);
+	game->window.img.exit_open = mlx_xpm_file_to_image(game->window.mlx,
+			EXIT_OPENED, &width, &height);
+}
+
+void	put_static(t_game *game)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < game->map.rows)
+	{
+		x = 0;
+		while (x < game->map.cols)
+		{
+			if (game->map.map_storage[y][x] == '1')
+				mlx_put_image_to_window(game->window.mlx, game->window.win,
+					game->window.img.wall, x * WIDTH, y * HEIGHT);
+			else if (game->map.map_storage[y][x] == 'E')
+				mlx_put_image_to_window(game->window.mlx, game->window.win,
+					game->window.img.exit, x * WIDTH, y * HEIGHT);
+			else
+				mlx_put_image_to_window(game->window.mlx, game->window.win,
+					game->window.img.floor, x * WIDTH, y * HEIGHT);
+			x++;
+		}
+		y++;
+	}
 }
 
 void	put_dinamic(int x, int y, char c, t_game *game)
 {
-	static int	width = WIDTH;
-	static int	height = HEIGHT;
-
-	if (c == '0' || c == 'C' || c == 'P')
+	if (c == 'E' && game->map.collectables == 0)
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
-			game->window.img.floor, x * width, y * height);
-	else if (c == 'E')
-		mlx_put_image_to_window(game->window.mlx, game->window.win,
-			game->window.img.exit, x * width, y * height);
+			game->window.img.exit_open, x * WIDTH, y * HEIGHT);
 	if (c == 'P')
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
-			game->window.img.player, x * width, y * height);
+			game->window.img.player, x * WIDTH, y * HEIGHT);
 	if (c == 'C')
 		mlx_put_image_to_window(game->window.mlx, game->window.win,
-			game->window.img.collectable, x * width, y * height);
+			game->window.img.collectable, x * WIDTH, y * HEIGHT);
 }
-
 
 int	render_img(t_game *game)
 {

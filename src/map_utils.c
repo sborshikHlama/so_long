@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 13:17:24 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/01 12:17:40 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:34:21 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/21 19:43:33 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void	map_size(int fd, t_map_data *map)
 	max_width = 0;
 	height = 0;
 	line_length = 0;
-
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
+		{
 			break ;
+		}
 		line_length = ft_strlen(line + 1);
 		if (line_length > max_width)
 			max_width = line_length;
@@ -53,7 +54,7 @@ void	validate_char(t_map_data *map, char c, int x, int y)
 	else if (c == '1' || c == '0')
 		return ;
 	else
-		error_exit("Error: invalid character", map);
+		error_exit("Error: invalid character", map, 1);
 }
 
 void	map_checker(t_map_data *map)
@@ -73,15 +74,15 @@ void	map_checker(t_map_data *map)
 		y++;
 	}
 	if (map->collectables == 0)
-		error_exit("Error: no collectables found", map);
+		error_exit("Error: no collectables found", map, 1);
 	else if (map->exit == 0)
-		error_exit("Error: no exit", map);
+		error_exit("Error: no exit", map, 1);
 	else if (map->exit > 1)
-		error_exit("Error: more than one exit", map);
+		error_exit("Error: more than one exit", map, 1);
 	else if (map->player == 0)
-		error_exit("Error: no player found", map);
+		error_exit("Error: no player found", map, 1);
 	else if (map->player > 1)
-		error_exit("Error: more than one player found", map);
+		error_exit("Error: more than one player found", map, 1);
 }
 
 void	wall_checker(t_map_data *map)
@@ -97,10 +98,10 @@ void	wall_checker(t_map_data *map)
 		{
 			if (map->map_storage[x][0] != '1'
 				|| map->map_storage[x][map->cols - 1] != '1')
-				error_exit("Error: map is not surrounded by walls", map);
+				error_exit("Error: map is not surrounded by walls", map, 1);
 			if (map->map_storage[0][y] != '1'
 				|| map->map_storage[map->rows - 1][y] != '1')
-				error_exit("Error: map is not surrounded by walls", map);
+				error_exit("Error: map is not surrounded by walls", map, 1);
 			y++;
 		}
 		x++;
@@ -117,8 +118,7 @@ void	ractangle_checker(t_map_data *map)
 	while (map->map_storage[x])
 	{
 		if (ft_strlen(map->map_storage[x]) != size)
-			error_exit("Error: map is not rectangular", map);
+			error_exit("Error: map is not rectangular", map, 1);
 		x++;
 	}
 }
-

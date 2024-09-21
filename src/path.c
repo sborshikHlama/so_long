@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/08 15:04:02 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/11 09:40:25 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:47 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/21 20:28:17 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	path_map_malloc(t_game *game, int fd)
 	y = game->map.rows + 1;
 	game->map.path_map = (char **)malloc(sizeof(char *) * y);
 	if (!game->map.path_map)
-		free_img(game);
+	{
+		close(fd);
+		error_exit("Error: can't alloc path map", game->map.map_storage, 0);
+	}
 	while (i < y)
 	{
 		line = get_next_line(fd);
@@ -40,7 +43,7 @@ bool	valid_path(t_game *game, int x, int y)
 	if (x < 0 || y < 0 || y >= game->map.rows || x >= game->map.cols)
 		return (false);
 	else if (game->map.path_map[y][x] == 'X')
-		return (false);	
+		return (false);
 	else if (game->map.path_map[y][x] == '1')
 		return (false);
 	else if (game->map.path_map[y][x] == 'E')
@@ -84,7 +87,7 @@ void	check_path(t_game *game, int fd)
 	{
 		free_path_map(game);
 		close(fd);
-		error_exit("Error\nImpossible to pass\n", &game->map);
+		error_exit("Error: Impossible to pass", &game->map, 1);
 	}
 	free_path_map(game);
 }

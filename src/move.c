@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/14 18:26:32 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:02:49 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:33:57 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/19 19:00:54 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int	valid_move(t_game *game, int row, int col, int pressed_key)
 {
 	game->window.temp = '0';
-
 	if (game->map.map_storage[row][col] == '1')
 		return (-1);
 	if (game->map.map_storage[row][col] == 'C')
@@ -37,9 +36,9 @@ void	end_game(t_game *game, int col, int row)
 	game->end_game = 1;
 }
 
-void	ft_helpa(int n)
+void	display_step(int n)
 {
-	write(1, "Step: ", 6);
+	write(1, "MOVE: ", 6);
 	ft_putnbr_fd(n, 1);
 	write(1, "\n", 1);
 }
@@ -54,17 +53,22 @@ static void	moving(t_game *game, int row, int col, int pressed_key)
 	old_col = game->map.player_position_x;
 	(void)pressed_key;
 	valid = valid_move(game, row, col, pressed_key);
-
 	if (valid != -1)
 	{
 		game->map.player_position_y = row;
 		game->map.player_position_x = col;
 		game->map.map_storage[row][col] = 'P';
 		game->map.map_storage[old_row][old_col] = '0';
+		mlx_put_image_to_window(game->window.mlx, game->window.win,
+			game->window.img.floor, old_col * WIDTH, old_row * HEIGHT);
 		game->move++;
+		display_step(game->move);
 		render_img(game);
 		if (valid == 2)
+		{
+			ft_putendl_fd("Game ended!", 1);
 			close_window(game);
+		}
 	}
 }
 

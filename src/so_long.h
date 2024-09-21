@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 18:31:44 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/10 22:07:50 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/19 16:46:24 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/21 20:52:34 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,29 @@
 # include <stdlib.h>
 # include "../libs/get_next_line/get_next_line.h"
 # include "../libs/libft/libft.h"
-# include "../libs/minilibx/mlx.h"
+# include "../libs/minilibx-linux/mlx.h"
 # include <stdbool.h>
 
-# define W 13
-# define A 0
-# define S 1
-# define D 2
-# define ESC 53
+// Keys for mac
+// # define W 13
+// # define A 0
+// # define S 1
+// # define D 2
+// # define ESC 53
 
-# define WALL "./wall.xpm"
-# define GROUND "./ground.xpm"
-# define PLAYER "./player.xpm"
-# define COLLECTABLE "./collectable.xpm"
-# define EXIT_CLOSED "./exit_close.xpm"
-# define PLAYER_FRONT_XPM	"./front.xpm"
-# define PLAYER_LEFT_XPM	"./left.xpm"
-# define PLAYER_RIGHT_XPM	"./right.xpm"
-# define PLAYER_BACK_XPM	"./back.xpm"
+//Keys for linux
+# define W 119
+# define A 97
+# define S 115
+# define D 100
+# define ESC 65307
+
+# define WALL "./assets/wall.xpm"
+# define GROUND "./assets/ground.xpm"
+# define PLAYER "./assets/player.xpm"
+# define COLLECTABLE "./assets/collectable.xpm"
+# define EXIT_CLOSED "./assets/exit_close.xpm"
+# define EXIT_OPENED "./assets/exit_open.xpm"
 
 typedef struct s_img
 {
@@ -45,6 +50,7 @@ typedef struct s_img
 	void	*fin_exit;
 	void	*on_exit;
 	void	*floor;
+	void	*exit_open;
 }	t_img;
 
 typedef struct window
@@ -54,7 +60,6 @@ typedef struct window
 	void	*win;
 	char	temp;
 }	t_window;
-
 
 typedef struct map_data
 {
@@ -66,7 +71,6 @@ typedef struct map_data
 	int		player_position_y;
 	int		player;
 	int		exit;
-	int		allocated;
 	char	**path_map;
 }	t_map_data;
 
@@ -76,19 +80,21 @@ typedef struct s_game
 	t_window	window;
 	int			move;
 	int			end_game;
+	int			fd;
 }	t_game;
 
 # define WIDTH 71
 # define HEIGHT 71
 
-
 void	map_size(int fd, t_map_data *map);
 
 void	wall_checker(t_map_data *map);
 
-void	error_exit(char *msg, t_map_data *map);
+void	error_exit(char *msg, t_map_data *map, int map_allocated);
 
 void	map_checker(t_map_data *map);
+
+void	put_static(t_game *game);
 
 void	check_fd(int fd);
 
@@ -97,8 +103,6 @@ void	ractangle_checker(t_map_data *map);
 void	arg_checker(t_map_data *map, int argc, char **argv);
 
 void	set_textures(t_game *game);
-
-void	put_map(int x, int y, char c, t_game *game);
 
 int		render_img(t_game *game);
 

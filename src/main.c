@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arsenii <arsenii@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 19:28:28 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/11 09:39:46 by arsenii          ###   ########.fr       */
+/*   Created: 2024/09/11 16:34:13 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/21 20:38:16 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	read_map(int fd, t_map_data *map)
 	int		i;
 	char	*line;
 	int		line_count;
+	char	*strimed_line;
 
 	i = 0;
 	line_count = map->rows + 1;
 	map->map_storage = (char **)malloc(line_count * sizeof(char *));
-	if (!map->map_storage)
-		error_exit("Error\n", map);
+	if (map->map_storage == NULL)
+	{
+		close(fd);
+		error_exit("Error while reading map", map, 0);
+	}
 	while (i < line_count)
 	{
 		line = get_next_line(fd);
@@ -35,13 +39,16 @@ void	read_map(int fd, t_map_data *map)
 void	prepare_game(t_game *game)
 {
 	game->map.player = 0;
-	game->move = 1;
+	game->move = 0;
 	game->map.rows = 0;
 	game->map.cols = 0;
 	game->end_game = 0;
 	game->map.exit = 0;
 	game->map.collectables = 0;
 	game->map.map_storage = NULL;
+	game->map.player_position_x = 0;
+	game->map.player_position_y = 0;
+	game->map.path_map = NULL;
 }
 
 void	start_game(t_game *game)
@@ -53,19 +60,7 @@ void	start_game(t_game *game)
 	game->window.win = mlx_new_window(game->window.mlx, game->map.cols * WIDTH,
 			game->map.rows * HEIGHT, "SO_LONG");
 	set_textures(game);
-	y = 0;
-	while (y < game->map.rows)
-	{
-		x = 0;
-		while (x < game->map.cols)
-		{
-			if (game->map.map_storage[y][x] == '1')
-				mlx_put_image_to_window(game->window.mlx, game->window.win,
-					game->window.img.wall, x * WIDTH, y * HEIGHT);
-			x++;
-		}
-		y++;
-	}
+	put_static(game);
 	render_img(game);
 	mlx_key_hook(game->window.win, move_key, game);
 	mlx_hook(game->window.win, 17, 0, close_window, game);
@@ -88,20 +83,21 @@ int	main(int argc, char **argv)
 	int			fd_path;
 	char		*filename;
 
-	// arg_checker(argc, argv, &game.map);
+	arg_checker(&game.map, argc, argv);
 	filename = argv[1];
-	fd1 = open(filename, O_RDONLY);
-	fd2 = open(filename, O_RDONLY);
-	fd_path = open(filename, O_RDONLY);
-	check_fd(fd1);
+	game.fd = open(filename, O_RDONLY);
+	check_fd(game.fd);
 	prepare_game(&game);
-	map_size(fd1, &game.map);
-	read_map(fd2, &game.map);
+	map_size(game.fd, &game.map);
+	close(game.fd);
+	game.fd = open(filename, O_RDONLY);
+	check_fd(game.fd);
+	read_map(game.fd, &game.map);
+	close(game.fd);
 	map_validation(&game.map);
-	check_path(&game, fd_path);
-	close(fd1);
-	close(fd2);
-	printf("Starting game!\n");
+	game.fd = open(filename, O_RDONLY);
+	check_path(&game, game.fd);
+	close(game.fd);
+	ft_putendl_fd("Starting game!", 1);
 	start_game(&game);
-	printf("YOU WONE!\n");
 }
