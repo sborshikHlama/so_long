@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/11 18:31:44 by arsenii           #+#    #+#             */
-/*   Updated: 2024/09/12 13:20:19 by aevstign         ###   ########.fr       */
+/*   Created: 2024/09/19 16:46:24 by aevstign          #+#    #+#             */
+/*   Updated: 2024/09/22 12:09:06 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@
 # define PLAYER "./assets/player.xpm"
 # define COLLECTABLE "./assets/collectable.xpm"
 # define EXIT_CLOSED "./assets/exit_close.xpm"
-# define PLAYER_FRONT_XPM	"./assets/front.xpm"
-# define PLAYER_LEFT_XPM	"./assets/left.xpm"
-# define PLAYER_RIGHT_XPM	"./assets/right.xpm"
-# define PLAYER_BACK_XPM	"./assets/back.xpm"
 # define EXIT_OPENED "./assets/exit_open.xpm"
 
 typedef struct s_img
@@ -84,6 +80,7 @@ typedef struct s_game
 	t_window	window;
 	int			move;
 	int			end_game;
+	int			fd;
 }	t_game;
 
 # define WIDTH 71
@@ -93,7 +90,7 @@ void	map_size(int fd, t_map_data *map);
 
 void	wall_checker(t_map_data *map);
 
-void	error_exit(char *msg, t_map_data *map);
+void	error_exit(char *msg, t_map_data *map, int map_allocated);
 
 void	map_checker(t_map_data *map);
 
@@ -107,7 +104,7 @@ void	arg_checker(t_map_data *map, int argc, char **argv);
 
 void	set_textures(t_game *game);
 
-void	put_map(int x, int y, char c, t_game *game);
+void	check_texture(t_game *game, t_img *texture);
 
 int		render_img(t_game *game);
 

@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:33:29 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/12 13:21:41 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/22 12:19:43 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,31 @@ void	set_textures(t_game *game)
 	height = 100;
 	game->window.img.wall = mlx_xpm_file_to_image(game->window.mlx,
 			WALL, &width, &height);
+	check_texture(game, game->window.img.wall);
 	game->window.img.floor = mlx_xpm_file_to_image(game->window.mlx,
 			GROUND, &width, &height);
+	check_texture(game, game->window.img.floor);
 	game->window.img.player = mlx_xpm_file_to_image(game->window.mlx,
 			PLAYER, &width, &height);
+	check_texture(game, game->window.img.player);
 	game->window.img.exit = mlx_xpm_file_to_image(game->window.mlx,
 			EXIT_CLOSED, &width, &height);
+	check_texture(game, game->window.img.exit);
 	game->window.img.collectable = mlx_xpm_file_to_image(game->window.mlx,
 			COLLECTABLE, &width, &height);
+	check_texture(game, game->window.img.collectable);
 	game->window.img.exit_open = mlx_xpm_file_to_image(game->window.mlx,
 			EXIT_OPENED, &width, &height);
+	check_texture(game, game->window.img.exit_open);
+}
+
+void	check_texture(t_game *game, t_img *texture)
+{
+	if (!texture)
+	{
+		ft_putendl_fd("Error: can't set textures", 1);
+		close_window(game);
+	}
 }
 
 void	put_static(t_game *game)

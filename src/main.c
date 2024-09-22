@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:34:13 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/12 13:29:25 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/21 20:38:16 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,16 @@ void	read_map(int fd, t_map_data *map)
 	int		i;
 	char	*line;
 	int		line_count;
+	char	*strimed_line;
 
 	i = 0;
 	line_count = map->rows + 1;
 	map->map_storage = (char **)malloc(line_count * sizeof(char *));
-	if (!map->map_storage)
-		error_exit("Error\n", map);
+	if (map->map_storage == NULL)
+	{
+		close(fd);
+		error_exit("Error while reading map", map, 0);
+	}
 	while (i < line_count)
 	{
 		line = get_next_line(fd);
@@ -42,6 +46,9 @@ void	prepare_game(t_game *game)
 	game->map.exit = 0;
 	game->map.collectables = 0;
 	game->map.map_storage = NULL;
+	game->map.player_position_x = 0;
+	game->map.player_position_y = 0;
+	game->map.path_map = NULL;
 }
 
 void	start_game(t_game *game)
@@ -78,19 +85,19 @@ int	main(int argc, char **argv)
 
 	arg_checker(&game.map, argc, argv);
 	filename = argv[1];
-	fd1 = open(filename, O_RDONLY);
-	fd2 = open(filename, O_RDONLY);
-	fd_path = open(filename, O_RDONLY);
-	check_fd(fd1);
+	game.fd = open(filename, O_RDONLY);
+	check_fd(game.fd);
 	prepare_game(&game);
-	map_size(fd1, &game.map);
-	read_map(fd2, &game.map);
+	map_size(game.fd, &game.map);
+	close(game.fd);
+	game.fd = open(filename, O_RDONLY);
+	check_fd(game.fd);
+	read_map(game.fd, &game.map);
+	close(game.fd);
 	map_validation(&game.map);
-	check_path(&game, fd_path);
-	close(fd1);
-	close(fd2);
-	close(fd_path);
-	printf("Starting game!\n");
+	game.fd = open(filename, O_RDONLY);
+	check_path(&game, game.fd);
+	close(game.fd);
+	ft_putendl_fd("Starting game!", 1);
 	start_game(&game);
-	printf("YOU WONE!\n");
 }

@@ -6,7 +6,7 @@
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:33:47 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/11 16:43:17 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/22 11:50:36 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	path_map_malloc(t_game *game, int fd)
 	y = game->map.rows + 1;
 	game->map.path_map = (char **)malloc(sizeof(char *) * y);
 	if (!game->map.path_map)
-		free_img(game);
+	{
+		close(fd);
+		error_exit("Error: can't alloc path map", &game->map, 0);
+	}
 	while (i < y)
 	{
 		line = get_next_line(fd);
@@ -84,7 +87,7 @@ void	check_path(t_game *game, int fd)
 	{
 		free_path_map(game);
 		close(fd);
-		error_exit("Error\nImpossible to pass\n", &game->map);
+		error_exit("Error: Impossible to pass", &game->map, 1);
 	}
 	free_path_map(game);
 }

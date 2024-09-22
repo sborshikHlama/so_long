@@ -1,12 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
+/* ************************************************************************** *//*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   move.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aevstign <aevstign@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 16:33:57 by aevstign          #+#    #+#             */
-/*   Updated: 2024/09/12 13:26:15 by aevstign         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:00:54 by aevstign         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +64,10 @@ static void	moving(t_game *game, int row, int col, int pressed_key)
 		display_step(game->move);
 		render_img(game);
 		if (valid == 2)
+		{
+			ft_putendl_fd("Game ended!", 1);
 			close_window(game);
+		}
 	}
 }
 
@@ -85,7 +87,10 @@ int	move_key(int keycode, t_game *game)
 	else if (keycode == D)
 		col++;
 	else if (keycode == ESC)
+	{
+		ft_putendl_fd("Game closed!", 1);
 		close_window(game);
+	}
 	moving(game, row, col, keycode);
 	return (0);
 }
